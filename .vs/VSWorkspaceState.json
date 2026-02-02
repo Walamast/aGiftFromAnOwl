@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\script",
+    "\\style"
   ],
   "SelectedNode": "\\customize.json",
   "PreviewInSolutionExplorer": false
