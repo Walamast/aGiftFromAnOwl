@@ -104,12 +104,15 @@ body {
 
 .idea-5 span,
 .idea-6 span,
+.idea-7 span,
 .wish-hbd span {
-  display: inline-block;
+    display: inline-block;
 }
 
-.idea-6 span {
-  font-size: 15rem;
+.idea-6 span,
+.idea-6 span,
+.idea-7 span {
+    font-size: 15rem;
 }
 
 .six {
@@ -158,57 +161,57 @@ body {
 }
 
 .eight svg:nth-child(1) {
-  top: 7vh;
-  left: 5vw;
-  fill: #bd6ecf;
+    top: 7vh;
+    left: 5vw;
+    fill: #C00000;
 }
 
 .eight svg:nth-child(2) {
-  top: 23vh;
-  left: 35vw;
-  fill: #7dd175;
+    top: 23vh;
+    left: 35vw;
+    fill: #FF3334;
 }
 
 .eight svg:nth-child(3) {
-  top: 33vh;
-  left: 23vw;
-  fill: #349d8b;
+    top: 33vh;
+    left: 23vw;
+    fill: #FF6F77;
 }
 
 .eight svg:nth-child(4) {
-  top: 43vh;
-  left: 57vw;
-  fill: #347a9d;
+    top: 43vh;
+    left: 57vw;
+    fill: #FFBBC1;
 }
 
 .eight svg:nth-child(5) {
-  top: 68vh;
-  left: 7vw;
-  fill: #c66053;
+    top: 68vh;
+    left: 7vw;
+    fill: #FFDEE3;
 }
 
 .eight svg:nth-child(6) {
-  top: 42vh;
-  left: 77vw;
-  fill: #bfaa40;
+    top: 42vh;
+    left: 77vw;
+    fill: #FF8896;
 }
 
 .eight svg:nth-child(7) {
-  top: 68vh;
-  left: 83vw;
-  fill: #e3bae8;
+    top: 68vh;
+    left: 83vw;
+    fill: #B90E11;
 }
 
 .eight svg:nth-child(8) {
-  top: 86vh;
-  left: 37vw;
-  fill: #8762cb;
+    top: 86vh;
+    left: 37vw;
+    fill: #5B0D1D;
 }
 
 .eight svg:nth-child(9) {
-  top: 94vh;
-  left: 87vw;
-  fill: #9a90da;
+    top: 94vh;
+    left: 87vw;
+    fill: #A10A1E;
 }
 
 .wish-hbd {
@@ -276,9 +279,10 @@ body {
     display: block;
   }
 
-  .idea-6 span {
-    font-size: 10rem;
-  }
+    .idea-6 span,
+    .idea-7 span, {
+        font-size: 10rem;
+    }
 
   .six .hat {
     width: 50px;

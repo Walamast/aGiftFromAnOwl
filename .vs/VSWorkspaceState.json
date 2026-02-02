@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\img",
     "\\script",
     "\\style"
   ],
-  "SelectedNode": "\\customize.json",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }
