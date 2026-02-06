@@ -276,31 +276,33 @@ const animationTimeline = () => {
 };
 
 const setupBackgroundMusic = (musicUrl) => {
-    const bgMusic = document.getElementById("bgMusic");
+  const bgMusic = document.getElementById("bgMusic");
 
-    if (!bgMusic || !musicUrl) {
-        return;
+  if (!bgMusic || !musicUrl) {
+    return;
+  }
+
+  bgMusic.src = musicUrl;
+  bgMusic.volume = 0.6;
+  bgMusic.load();
+
+  const playMusic = () => {
+    bgMusic.play().catch(() => {
+      // Autoplay can be blocked until user interacts with the page.
+    });
+  };
+
+  const unlockAutoplay = () => {
+    if (bgMusic.paused) {
+      playMusic();
     }
+  };
 
-    bgMusic.src = musicUrl;
+  playMusic();
 
-    const playMusic = () => {
-        bgMusic.play().catch(() => {
-            // Autoplay can be blocked until user interacts with the page.
-        });
-    };
-
-    playMusic();
-
-    document.addEventListener(
-        "click",
-        () => {
-            if (bgMusic.paused) {
-                playMusic();
-            }
-        },
-        { once: true }
-    );
+  ["click", "touchstart", "pointerdown", "keydown"].forEach((eventName) => {
+    document.addEventListener(eventName, unlockAutoplay, { once: true });
+  });
 };
 
 // Import the data to customize and insert them into page
