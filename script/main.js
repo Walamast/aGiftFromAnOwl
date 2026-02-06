@@ -275,16 +275,25 @@ const animationTimeline = () => {
   });
 };
 
-const setupBackgroundMusic = (musicUrl) => {
+const DEFAULT_MUSIC_URL = "audio/valentine-theme.wav";
+
+const setupBackgroundMusic = (musicUrl = DEFAULT_MUSIC_URL) => {
   const bgMusic = document.getElementById("bgMusic");
 
   if (!bgMusic || !musicUrl) {
     return;
   }
 
-  bgMusic.src = musicUrl;
+  const absoluteMusicUrl = new URL(musicUrl, window.location.href).href;
+  const shouldLoadMusic = bgMusic.src !== absoluteMusicUrl;
+
+  if (shouldLoadMusic) {
+    bgMusic.src = musicUrl;
+  }
   bgMusic.volume = 0.6;
-  bgMusic.load();
+  if (shouldLoadMusic) {
+    bgMusic.load();
+  }
 
   const playMusic = () => {
     bgMusic.play().catch(() => {
@@ -298,7 +307,11 @@ const setupBackgroundMusic = (musicUrl) => {
     }
   };
 
-  playMusic();
+   if (bgMusic.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+    playMusic();
+  } else {
+    bgMusic.addEventListener("canplay", playMusic, { once: true });
+  }
 
   ["click", "touchstart", "pointerdown", "keydown"].forEach((eventName) => {
     document.addEventListener(eventName, unlockAutoplay, { once: true });
@@ -307,26 +320,25 @@ const setupBackgroundMusic = (musicUrl) => {
 
 // Import the data to customize and insert them into page
 const fetchData = () => {
-    fetch("customize.json")
-        .then((data) => data.json())
-        .then((data) => {
-            setupBackgroundMusic(data.musicUrl);
+  return fetch("customize.json")
+    .then((data) => data.json())
+    .then((data) => {
+      setupBackgroundMusic(data.musicUrl || DEFAULT_MUSIC_URL);
 
-            Object.keys(data).map((customData) => {
-                if (data[customData] !== "") {
-                    if (customData === "imagePath") {
-                        document
-                        .getElementById(customData)
-                        .setAttribute("src", data[customData]);
-                        return;
-                    }
+      Object.keys(data).forEach((customData) => {
+        if (data[customData] !== "") {
+          if (customData === "imagePath") {
+            document
+              .getElementById(customData)
+              .setAttribute("src", data[customData]);
+            return;
+          }
 
-                    const element = document.getElementById(customData);
+          const element = document.getElementById(customData);
 
-                    if (element) {
-                        element.innerText = data[customData];
-
-                    }
+          if (element) {
+            element.innerText = data[customData];
+          }
         }
       });
     });
@@ -334,10 +346,9 @@ const fetchData = () => {
 
 // Run fetch and animation in sequence
 const resolveFetch = () => {
-  return new Promise((resolve, reject) => {
-    fetchData();
-    resolve("Fetch done!");
-  });
+  rconst resolveFetch = () => {
+  return fetchData();
 };
 
-resolveFetch().then(animationTimeline());
+setupBackgroundMusic();
+resolveFetch().then(animationTimeline);
