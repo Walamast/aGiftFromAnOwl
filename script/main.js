@@ -280,20 +280,19 @@ const DEFAULT_MUSIC_URL = "audio/valentine-theme.wav";
 const setupBackgroundMusic = (musicUrl = DEFAULT_MUSIC_URL) => {
   const bgMusic = document.getElementById("bgMusic");
 
-  if (!bgMusic || !musicUrl) {
+  if (!bgMusic) {
     return;
   }
 
-  const absoluteMusicUrl = new URL(musicUrl, window.location.href).href;
-  const shouldLoadMusic = bgMusic.src !== absoluteMusicUrl;
+  if (musicUrl) {
+    const absoluteMusicUrl = new URL(musicUrl, window.location.href).href;
 
-  if (shouldLoadMusic) {
-    bgMusic.src = musicUrl;
+    if (bgMusic.src !== absoluteMusicUrl) {
+      bgMusic.src = musicUrl;
+    }
   }
+
   bgMusic.volume = 0.6;
-  if (shouldLoadMusic) {
-    bgMusic.load();
-  }
 
   const playMusic = () => {
     bgMusic.play().catch(() => {
@@ -307,11 +306,7 @@ const setupBackgroundMusic = (musicUrl = DEFAULT_MUSIC_URL) => {
     }
   };
 
-   if (bgMusic.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
-    playMusic();
-  } else {
-    bgMusic.addEventListener("canplay", playMusic, { once: true });
-  }
+  playMusic();
 
   ["click", "touchstart", "pointerdown", "keydown"].forEach((eventName) => {
     document.addEventListener(eventName, unlockAutoplay, { once: true });
@@ -346,7 +341,6 @@ const fetchData = () => {
 
 // Run fetch and animation in sequence
 const resolveFetch = () => {
-  rconst resolveFetch = () => {
   return fetchData();
 };
 
