@@ -275,20 +275,56 @@ const animationTimeline = () => {
   });
 };
 
+const setupBackgroundMusic = (musicUrl) => {
+    const bgMusic = document.getElementById("bgMusic");
+
+    if (!bgMusic || !musicUrl) {
+        return;
+    }
+
+    bgMusic.src = musicUrl;
+
+    const playMusic = () => {
+        bgMusic.play().catch(() => {
+            // Autoplay can be blocked until user interacts with the page.
+        });
+    };
+
+    playMusic();
+
+    document.addEventListener(
+        "click",
+        () => {
+            if (bgMusic.paused) {
+                playMusic();
+            }
+        },
+        { once: true }
+    );
+};
+
 // Import the data to customize and insert them into page
 const fetchData = () => {
-  fetch("customize.json")
-    .then((data) => data.json())
-    .then((data) => {
-      Object.keys(data).map((customData) => {
-        if (data[customData] !== "") {
-          if (customData === "imagePath") {
-            document
-              .getElementById(customData)
-              .setAttribute("src", data[customData]);
-          } else {
-            document.getElementById(customData).innerText = data[customData];
-          }
+    fetch("customize.json")
+        .then((data) => data.json())
+        .then((data) => {
+            setupBackgroundMusic(data.musicUrl);
+
+            Object.keys(data).map((customData) => {
+                if (data[customData] !== "") {
+                    if (customData === "imagePath") {
+                        document
+                        .getElementById(customData)
+                        .setAttribute("src", data[customData]);
+                        return;
+                    }
+
+                    const element = document.getElementById(customData);
+
+                    if (element) {
+                        element.innerText = data[customData];
+
+                    }
         }
       });
     });
